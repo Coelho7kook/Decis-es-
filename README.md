@@ -17,7 +17,7 @@ git push -u origin main
     <title>Para Kamille</title>
     <style>
         body {
-            background-image: url('background.jpg');
+            background-image: url('background.jpg'); /* Adiciona a imagem de fundo */
             background-size: cover;
             font-family: 'Times New Roman', serif;
             color: #333;
@@ -66,9 +66,34 @@ git push -u origin main
             background-color: #f44336;
             color: white;
         }
+        .button3 {
+            background-color: #2196F3;
+            color: white;
+        }
+        .button4 {
+            background-color: #FF9800;
+            color: white;
+        }
     </style>
 </head>
-<body>
+<body onload="playAudio('musica1')">
+
+    <!-- Elementos de áudio -->
+    <audio id="musica1" loop autoplay>
+        <source src="musica1.mp3" type="audio/mp3">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <audio id="musica2" loop>
+        <source src="musica2.mp3" type="audio/mp3">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <audio id="musica3" loop>
+        <source src="musica3.mp3" type="audio/mp3">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+
     <div class="content">
         <h1>Minha Querida Kamille</h1>
         <img src="top_image.jpg" alt="Imagem Superior">
@@ -82,8 +107,9 @@ Sei que parece impossível, mas peço que entenda que tudo o que aconteceu foi u
         <img src="bottom_image.jpg" alt="Imagem Inferior">
 
         <div class="buttons">
-            <button class="button1" onclick="showText('continuar')">Recomeçar/Continuar</button>
-            <button class="button2" onclick="showText('terminar')">Tudo Acaba por Aqui</button>
+            <button class="button1" onclick="showText('continuar', 'musica2')">Recomeçar/Continuar</button>
+            <button class="button2" onclick="showText('terminar', 'musica3')">Tudo Acaba por Aqui</button>
+            <button class="button3" onclick="resetText()">Voltar ao Inicial</button>
         </div>
 
         <p id="continuar" style="display:none;">Recomeçar ao seu lado seria como reviver um sonho, um sonho que eu nunca quis acordar. 
@@ -105,20 +131,40 @@ Por favor, pense bem, e se esse realmente for seu desejo, mande 'F' no WhatsApp,
     </div>
 
     <script>
-        function showText(option) {
+        function showText(option, audioId) {
             var mainText = document.getElementById('main-text');
             var continuarText = document.getElementById('continuar');
             var terminarText = document.getElementById('terminar');
-            
+
+            mainText.style.display = 'none';
+            continuarText.style.display = 'none';
+            terminarText.style.display = 'none';
+
+            document.getElementById('musica1').pause();
+            document.getElementById('musica2').pause();
+            document.getElementById('musica3').pause();
+
             if (option === 'continuar') {
-                mainText.style.display = 'none';
-                terminarText.style.display = 'none';
                 continuarText.style.display = 'block';
+                document.getElementById(audioId).play();
             } else if (option === 'terminar') {
-                mainText.style.display = 'none';
-                continuarText.style.display = 'none';
                 terminarText.style.display = 'block';
+                document.getElementById(audioId).play();
             }
+        }
+
+        function resetText() {
+            document.getElementById('main-text').style.display = 'block';
+            document.getElementById('continuar').style.display = 'none';
+            document.getElementById('terminar').style.display = 'none';
+
+            document.getElementById('musica1').play();
+            document.getElementById('musica2').pause();
+            document.getElementById('musica3').pause();
+        }
+
+        function playAudio(audioId) {
+            document.getElementById(audioId).play();
         }
     </script>
 </body>
